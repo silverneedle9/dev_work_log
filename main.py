@@ -42,11 +42,14 @@ def input_data(category):
     while True:
         print("입력 종료를 원하시면 n, 아니면 계속 입력")
         temp = input(":")
-        if temp !="n" and temp !='ㅜ' and temp != 'ㄴ':
-            memo = memo.strip() + "," + temp.strip()
+        if len(temp) <= 3:
+            if temp[0] !="n" and temp[0] !='ㅜ' and temp[0] != 'ㄴ' and temp[0] != 's':
+                memo = memo.strip() + "," + temp.strip()
+            else:
+                print("입력을 종료합니다.")
+                return category + "|" + memo
         else:
-            print("입력을 종료합니다.")
-            return category + "|" + memo
+            memo = memo.strip() + "," + temp.strip()
         
 def write_data(s_time, e_time, text):
     file_name = dt.datetime.strftime(dt.datetime.now(), time_format_date) + ".txt"
