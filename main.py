@@ -18,22 +18,24 @@ def first_menu(): # 최상단 메뉴 메뉴 선택후 각 메뉴 번호 int 리�
             return user_select
         except:
             print("숫자만 입력해주세요")
+
 def second_menu(): # 기록선택 -> 메뉴 선택후 각 메뉴 번호 int 리턴
     while True:
+        print("#"*30)
+        print("1. 업무")
+        print("2. 프로그래밍")
+        print("3. 공부")
+        print("4. 독서")
+        print("5. 극단")
+        print("6. 기타")
+        print("7. 취소")
+        print("#"*30)
+        user_select = input()
         try:
-            print("#"*30)
-            print("1. 업무")
-            print("2. 프로그래밍")
-            print("3. 공부")
-            print("4. 독서")
-            print("5. 극단")
-            print("6. 기타")
-            print("7. 취소")
-            print("#"*30)
-            user_select = int(input())
-            return user_select
+            return int(user_select)
         except:
-            print("숫자만 입력해주세요.")
+            tag_list = ["업무","프로그래밍","공부","독서","극단","기타"]
+            return tag_list.index(user_select)
     
 
 def input_data(category):
@@ -101,7 +103,7 @@ while True:
         try:
             menu_select = int(second_menu()) # 두 번째 메뉴 함수 실행
             if menu_select != 7: # 업무 선택
-                data_for_wirte = input_data(tag_list[menu_select-1])
+                data_for_wirte = input_data(tag_list[menu_select])
                 end_time = dt.datetime.now()
                 write_data(start_time, end_time, data_for_wirte)
             else:
