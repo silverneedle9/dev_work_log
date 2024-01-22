@@ -42,7 +42,7 @@ def input_data(category):
     while True:
         print("입력 종료를 원하시면 n, 아니면 계속 입력")
         temp = input(":")
-        if temp !="n":
+        if temp !="n" and temp !='ㅜ' and temp != 'ㄴ':
             memo = memo.strip() + "," + temp.strip()
         else:
             print("입력을 종료합니다.")
