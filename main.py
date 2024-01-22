@@ -37,9 +37,11 @@ def second_menu(): # 기록선택 -> 메뉴 선택후 각 메뉴 번호 int 리�
     
 
 def input_data(category):
+    print(category + "를 입력 중입니다.")
     print("메모입력")
     memo = input(":")
     while True:
+        print(category + "를 입력 중입니다.")
         print("입력 종료를 원하시면 n, 아니면 계속 입력")
         temp = input(":")
         if len(temp) <= 3:
