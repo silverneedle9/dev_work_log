@@ -32,7 +32,7 @@ def second_menu(): # 기록선택 -> 메뉴 선택후 각 메뉴 번호 int 리�
         print("#"*30)
         user_select = input()
         try:
-            return int(user_select)
+            return int(user_select) - 1
         except:
             tag_list = ["업무","프로그래밍","공부","독서","극단","기타"]
             return tag_list.index(user_select)
@@ -78,11 +78,10 @@ def print_all(lists, target_date=""):
     if target_date == "":
         file_name = dt.datetime.strftime(dt.datetime.now(), time_format_date) + ".txt"
     else:
-        file_name = target_date + ".txt"
+        file_name = target_date.replace("-","_") + ".txt"
     data = {}
     for i in lists: # 딕셔너리 초기화
         data[i] =  0
-    print(data)
     with open(f"result/{file_name}", 'r', encoding='utf8') as f:
         while True:
             line = f.readline().strip()
@@ -95,6 +94,34 @@ def print_all(lists, target_date=""):
             data[line[2]] += elapsed_time
     total_data(data, file_name)
 
+def make_time_line(target_date = ""):
+    if target_date == "":
+        file_name = dt.datetime.strftime(dt.datetime.now(), time_format_date) + ".txt"
+    else:
+        file_name = target_date.replace("-","_") + ".txt"
+
+    stor = []
+    target = []
+    with open(f"result/{file_name}", 'r', encoding='utf8') as f:
+        while True:
+            line = f.readline().strip()
+            if line == "":
+                break
+            line = line.split("|")
+            stor.append(line)
+            if line[2] not in target:
+                target.append(line[2])
+    with open(f"result/{file_name}", 'a', encoding='utf8') as f:
+        f.write("\n\n\n태그별 타임라인 정리\n")
+        for i in target:
+            f.write(f"{i}\n")
+            for j in stor:
+                if j[2] == i:
+                    f.write(f"{j[0][11:19]}|{j[1][11:19]}|{j[3]}")
+            f.write("\n\n")
+            
+
+        
 tag_list = ["업무","프로그래밍","공부","독서","극단","기타"]
 while True:
     menu_select = first_menu()
@@ -111,11 +138,13 @@ while True:
         except:
             print("잘못 입력하셨습니다.")
     elif menu_select == 2: # 사용자 출력 선택 - 현재 날짜로 result 폴더에 저장
-        check_date = input(f"결과를 출력할 날짜를 입력해주세요.(미입력시 오늘,입력형식:{time_format_date})")
+        check_date = input(f"결과를 출력할 날짜를 입력해주세요.(미입력시 오늘)")
         if check_date == "":
             print_all(tag_list)
+            make_time_line()
         else:
             print_all(tag_list, check_date)
+            make_time_line(check_date)
     elif menu_select == 3: # 프로그램 종료
         print("프로그램을 종료합니다.")
         break
