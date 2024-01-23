@@ -121,7 +121,7 @@ def make_time_line(target_date = ""):
             f.write(f"{i}\n")
             for j in stor:
                 if j[2] == i:
-                    f.write(f"{j[0][11:19]}|{j[1][11:19]}|{j[3]}")
+                    f.write(f"{j[0][11:19]}|{j[1][11:19]}|{j[3]}\n")
             f.write("\n\n")
             
 
