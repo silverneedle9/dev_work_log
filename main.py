@@ -131,6 +131,7 @@ while True:
     menu_select = first_menu()
     if menu_select == 1: # 사용자 기록 선택 
         start_time = dt.datetime.now()  # 기록 시작하는 시간 저장
+        print(str(start_time)[11:19], "부터 입력 시작")
         try:
             menu_select = int(second_menu()) # 두 번째 메뉴 함수 실행
             if menu_select != 7: # 업무 선택
