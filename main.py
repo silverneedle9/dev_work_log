@@ -123,7 +123,36 @@ def make_time_line(target_date = ""):
                 if j[2] == i:
                     f.write(f"{j[0][11:19]}|{j[1][11:19]}|{j[3]}\n")
             f.write("\n\n")
-            
+
+def calc_full_time(target_date = ""):
+    if target_date == "":
+        file_name = dt.datetime.strftime(dt.datetime.now(), time_format_date) + ".txt"
+    else:
+        file_name = target_date.replace("-","_") + ".txt"
+
+    with open(f"result/{file_name}", 'r', encoding='utf8') as f:
+        i = 0
+        while True:
+            line = f.readline().strip()
+            if line == "":
+                e_time = dt.datetime.strptime(prev_data[1], "%Y-%m-%d %H:%M:%S.%f")
+                elapsed_time = (e_time - s_time).total_seconds()
+                write_full_data(elapsed_time, file_name)
+                break
+            line = line.split("|")
+            if i == 0:
+                s_time = dt.datetime.strptime(line[0], "%Y-%m-%d %H:%M:%S.%f")
+            prev_data = line
+            i += 1
+
+def write_full_data(v, file_name):
+    with open(f"result/{file_name}", 'a', encoding='utf8') as f:
+        hours = v // 3600
+        v = v - (hours * 3600)
+        minu = v // 60
+        v = v - (minu * 60)
+        f.write(f"\n\n\n총 시간 : {math.floor(hours)}h {math.floor(minu)}m {round(v)}s\n")
+
 
         
 tag_list = ["업무","프로그래밍","공부","독서","극단","기타"]
@@ -147,9 +176,11 @@ while True:
         if check_date == "":
             print_all(tag_list)
             make_time_line()
+            calc_full_time()
         else:
             print_all(tag_list, check_date)
             make_time_line(check_date)
+            calc_full_time(check_date)
     elif menu_select == 3: # 프로그램 종료
         print("프로그램을 종료합니다.")
         break
